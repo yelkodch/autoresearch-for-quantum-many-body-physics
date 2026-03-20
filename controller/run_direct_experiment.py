@@ -370,7 +370,7 @@ def restore_best_snapshot(campaign_dir: Path) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Direct-edit keep/discard experiment runner for J1-J2")
     parser.add_argument("--campaign-dir", type=Path, default=None)
-    parser.add_argument("--description", type=str, default="manual experiment")
+    parser.add_argument("--description", type=str, default="experiment")
     parser.add_argument("--max-steps", type=int, default=50)
     parser.add_argument("--time-budget-s", type=float, default=None)
     parser.add_argument("--panel-seed", type=int, default=None)

@@ -8,7 +8,7 @@ Use this checklist before publishing a new snapshot of the repository.
 - local virtual environments are ignored
 - generated `results/` and `logs/` directories are ignored
 - no machine-specific absolute paths appear in tracked documentation
-- no personal names or internal labels remain in public-facing docs unless scientifically necessary
+- no personal names or legacy person-specific labels remain in public-facing docs unless scientifically necessary
 
 ## Technical Sanity
 

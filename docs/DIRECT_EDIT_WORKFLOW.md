@@ -3,8 +3,9 @@
 This workflow treats `train.py` as the single mutable artifact while keeping the
 physics and evaluation code fixed.
 
-It is the closest component in this repository to the original autoresearch
-pattern that inspired the project, adapted here for a quantum many-body setting.
+It is the closest component in this repository to the original
+[`autoresearch`](https://github.com/karpathy/autoresearch) pattern that inspired
+the project, adapted here for a quantum many-body setting.
 
 ## Core Rule
 
@@ -19,7 +20,7 @@ Edit `train.py`, then evaluate it:
 ```bash
 .venv/bin/python controller/run_direct_experiment.py \
   --campaign-dir results/fixed_panel_search \
-  --description "brief note about the change" \
+  --description "brief description of the change" \
   --max-steps 50
 ```
 
@@ -50,8 +51,6 @@ Each campaign directory contains:
 - `best_train.py`
 - `initial_train.py`
 - `experiment_state.json`
-- `agent_memory.md`
-- `agent_memory.json`
 
 ## Fixed-Budget Rule
 

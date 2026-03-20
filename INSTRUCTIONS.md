@@ -86,4 +86,4 @@ jupyter lab notebooks/j1j2_results_dashboard.ipynb
 - do not commit `.env`, `results/`, or `logs/`,
 - keep documentation path-agnostic,
 - avoid embedding machine-specific absolute paths in generated summaries,
-- prefer neutral names such as "direct-edit search" over personal/internal labels.
+- prefer neutral names such as "direct-edit search" over legacy or person-specific labels.

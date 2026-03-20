@@ -5,14 +5,16 @@
 This repository studies transformer-based neural quantum states for the frustrated
 spin-1/2 J1-J2 Heisenberg model on the periodic 4x4 square lattice.
 
-**Status:** ongoing research prototype. The repository is intended to be
-scientifically honest, reproducible, and easy to audit, but the current best
-recipe should still be treated as an exploratory result rather than a final claim.
+> **Ongoing work**
+> This repository is an active research prototype. The current best recipe is
+> useful and reproducible, but it should still be treated as exploratory rather
+> than as a final scientific claim.
 
-The workflow is inspired by Andrej Karpathy's `autoresearch` idea: keep the task
-setup fixed, let an automated process modify the mutable training recipe, and
-evaluate each proposal against a stable benchmark. Here that idea is adapted to
-quantum many-body variational calculations, where the Hamiltonian, lattice, and
+The workflow is inspired by Andrej Karpathy's
+[`autoresearch`](https://github.com/karpathy/autoresearch): keep the task setup
+fixed, let an automated process modify the mutable training recipe, and evaluate
+each proposal against a stable benchmark. Here that idea is adapted to quantum
+many-body variational calculations, where the Hamiltonian, lattice, and
 reference diagnostics stay fixed while `train.py` is optimized.
 
 The project is organized around a simple separation of concerns:
@@ -103,7 +105,7 @@ version against a fixed panel:
 ```bash
 .venv/bin/python controller/run_direct_experiment.py \
   --campaign-dir results/fixed_panel_search \
-  --description "short note about the idea" \
+  --description "brief description of the change" \
   --max-steps 50
 ```
 
@@ -134,6 +136,8 @@ In short:
   promising as an optimization recipe, but not yet clearly better as a final
   trained model across all anchor points.
 
+![Fixed-panel search summary](docs/figures/fixed_panel_search_summary.png)
+
 That distinction is important: the repository already demonstrates useful
 automated search behavior, but the current best short-budget recipe should still
 be treated as exploratory rather than definitive.
@@ -143,6 +147,7 @@ be treated as exploratory rather than definitive.
 - [docs/METHODOLOGY.md](docs/METHODOLOGY.md): benchmark design and evaluation protocol
 - [docs/RESULTS.md](docs/RESULTS.md): curated public result summary
 - [docs/DIRECT_EDIT_WORKFLOW.md](docs/DIRECT_EDIT_WORKFLOW.md): direct-edit search loop
+- [security_best_practices_report.md](security_best_practices_report.md): publication-focused privacy and security audit
 - [notebooks/j1j2_results_dashboard.ipynb](notebooks/j1j2_results_dashboard.ipynb): interactive comparison of exact references vs model output
 - [INSTRUCTIONS.md](INSTRUCTIONS.md): contributor-oriented runbook
 

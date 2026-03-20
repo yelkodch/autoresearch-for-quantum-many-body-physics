@@ -2,7 +2,8 @@
 
 This repository is the first worked example of a broader idea: using
 autoresearch-style automated recipe search for quantum many-body physics.
-The workflow is inspired by Andrej Karpathy's `autoresearch`, but adapted to a
+The workflow is inspired by Andrej Karpathy's
+[`autoresearch`](https://github.com/karpathy/autoresearch), but adapted to a
 scientific setting where the physics definition and evaluation harness remain
 fixed while only the mutable training recipe is searched.
 
