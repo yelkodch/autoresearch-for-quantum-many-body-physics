@@ -153,9 +153,7 @@ be treated as exploratory rather than definitive.
 - [docs/METHODOLOGY.md](docs/METHODOLOGY.md): benchmark design and evaluation protocol
 - [docs/RESULTS.md](docs/RESULTS.md): curated public result summary
 - [docs/DIRECT_EDIT_WORKFLOW.md](docs/DIRECT_EDIT_WORKFLOW.md): direct-edit search loop
-- [security_best_practices_report.md](security_best_practices_report.md): publication-focused privacy and security audit
 - [notebooks/j1j2_results_dashboard.ipynb](notebooks/j1j2_results_dashboard.ipynb): interactive comparison of exact references vs model output
-- [INSTRUCTIONS.md](INSTRUCTIONS.md): contributor-oriented runbook
 
 ## Limitations
 
