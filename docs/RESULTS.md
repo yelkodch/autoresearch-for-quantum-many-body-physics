@@ -1,7 +1,7 @@
 # Curated Results
 
 This document summarizes the current public result snapshot from the repository.
-Generated campaign directories are excluded from version control; the numbers
+Generated search directories are excluded from version control; the numbers
 below are the curated outcomes retained for documentation.
 
 These results should be read as outcomes from the first worked example of
@@ -19,7 +19,7 @@ Key outcome:
 - absolute improvement: `-0.005926`
 - winning iteration: `21`
 
-![Fixed-panel search summary](figures/fixed_panel_search_summary.png)
+![Recipe-search summary](figures/recipe_search_summary.png)
 
 ### Winning Recipe
 

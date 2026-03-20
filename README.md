@@ -110,7 +110,7 @@ version against a fixed panel:
 
 ```bash
 .venv/bin/python controller/run_direct_experiment.py \
-  --campaign-dir results/fixed_panel_search \
+  --campaign-dir results/recipe_search_example \
   --description "brief description of the change" \
   --max-steps 50
 ```
@@ -121,8 +121,8 @@ More details are in [docs/DIRECT_EDIT_WORKFLOW.md](docs/DIRECT_EDIT_WORKFLOW.md)
 
 ```bash
 .venv/bin/python controller/post_training_eval.py \
-  --baseline-path results/fixed_panel_search/initial_train.py \
-  --candidate-path results/fixed_panel_search/best_train.py \
+  --baseline-path results/recipe_search_example/initial_train.py \
+  --candidate-path results/recipe_search_example/best_train.py \
   --output-dir results/post_training_eval_example \
   --j2-values 0.0 0.5 1.0 \
   --seeds 11 \
@@ -142,7 +142,7 @@ In short:
   promising as an optimization recipe, but not yet clearly better as a final
   trained model across all anchor points.
 
-![Fixed-panel search summary](docs/figures/fixed_panel_search_summary.png)
+![Recipe-search summary](docs/figures/recipe_search_summary.png)
 
 That distinction is important: the repository already demonstrates useful
 automated search behavior, but the current best short-budget recipe should still

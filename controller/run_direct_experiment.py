@@ -77,6 +77,22 @@ def save_state(state_path: Path, state: ExperimentState) -> None:
     state_path.write_text(json.dumps(asdict(state), indent=2, sort_keys=True))
 
 
+def history_path_for(campaign_dir: Path) -> Path:
+    search_path = campaign_dir / "search_history.md"
+    legacy_path = campaign_dir / "campaign_history.md"
+    if search_path.exists() or not legacy_path.exists():
+        return search_path
+    return legacy_path
+
+
+def best_snapshot_marker_path_for(campaign_dir: Path) -> Path:
+    search_path = campaign_dir / "current_best_snapshot.txt"
+    legacy_path = campaign_dir / "CURRENT_BEST_SNAPSHOT.txt"
+    if search_path.exists() or not legacy_path.exists():
+        return search_path
+    return legacy_path
+
+
 def ensure_campaign(
     campaign_dir: Path,
     max_steps: int | None,
@@ -92,7 +108,7 @@ def ensure_campaign(
         (campaign_dir / "results.tsv").write_text(RESULTS_HEADER)
         (campaign_dir / "initial_train.py").write_text(baseline_text)
         (campaign_dir / "best_train.py").write_text(baseline_text)
-        (campaign_dir / "CURRENT_BEST_SNAPSHOT.txt").write_text(baseline_snapshot + "\n")
+        best_snapshot_marker_path_for(campaign_dir).write_text(baseline_snapshot + "\n")
         try:
             campaign_dir_str = str(campaign_dir.relative_to(ROOT))
         except ValueError:
@@ -134,7 +150,7 @@ def append_results_tsv(campaign_dir: Path, snapshot: str, panel_score: float, st
 
 
 def append_history(campaign_dir: Path, entry: dict[str, object]) -> None:
-    history_path = campaign_dir / "campaign_history.md"
+    history_path = history_path_for(campaign_dir)
     lines = [
         f"## Iteration {int(entry['iteration']):03d}",
         f"- snapshot: {entry['snapshot']}",
@@ -217,7 +233,7 @@ def summarize_changed_constants(changes: dict[str, dict[str, object]], limit: in
     return "; ".join(parts)
 
 
-def write_agent_memory(campaign_dir: Path, state: ExperimentState) -> None:
+def write_search_memory(campaign_dir: Path, state: ExperimentState) -> None:
     entries = load_ledger_entries(campaign_dir)
     best_train_path = campaign_dir / "best_train.py"
     best_constants = extract_literal_constants(best_train_path.read_text()) if best_train_path.exists() else {}
@@ -237,7 +253,7 @@ def write_agent_memory(campaign_dir: Path, state: ExperimentState) -> None:
     ][:10]
 
     lines = [
-        "# Agent Memory",
+        "# Search Memory",
         "",
         "Read this file before editing train.py. It records the ideas already tried,",
         "their scores on the fixed panel, and the current best recipe.",
@@ -306,8 +322,8 @@ def write_agent_memory(campaign_dir: Path, state: ExperimentState) -> None:
         "- Prefer ideas not already listed in the recent attempt log unless you have a concrete reason to retry them.",
     ]
 
-    (campaign_dir / "agent_memory.md").write_text("\n".join(lines) + "\n")
-    (campaign_dir / "agent_memory.json").write_text(
+    (campaign_dir / "search_memory.md").write_text("\n".join(lines) + "\n")
+    (campaign_dir / "search_memory.json").write_text(
         json.dumps(
             {
                 "best_iteration": state.best_iteration,
@@ -363,7 +379,7 @@ def restore_best_snapshot(campaign_dir: Path) -> str:
     best_text = best_train_path.read_text()
     best_snapshot = snapshot_id_for_text(best_text)
     TRAIN_PY.write_text(best_text)
-    (campaign_dir / "CURRENT_BEST_SNAPSHOT.txt").write_text(best_snapshot + "\n")
+    best_snapshot_marker_path_for(campaign_dir).write_text(best_snapshot + "\n")
     return best_snapshot
 
 
@@ -378,7 +394,7 @@ def main() -> None:
 
     ensure_project_dirs()
     if args.campaign_dir is None:
-        campaign_dir = RESULTS_DIR / f"direct_search_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
+        campaign_dir = RESULTS_DIR / f"recipe_search_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
     elif args.campaign_dir.is_absolute():
         campaign_dir = args.campaign_dir
     else:
@@ -420,7 +436,7 @@ def main() -> None:
         state.best_iteration = iteration
         state.best_snapshot = current_snapshot
         (campaign_dir / "best_train.py").write_text(current_text)
-        (campaign_dir / "CURRENT_BEST_SNAPSHOT.txt").write_text(current_snapshot + "\n")
+        best_snapshot_marker_path_for(campaign_dir).write_text(current_snapshot + "\n")
     else:
         status = "discard"
         restored_best = restore_best_snapshot(campaign_dir)
@@ -439,17 +455,17 @@ def main() -> None:
 
     state.completed_iterations = iteration
     save_state(state_path, state)
-    write_agent_memory(campaign_dir, state)
+    write_search_memory(campaign_dir, state)
 
     try:
-        campaign_dir_display = str(campaign_dir.relative_to(ROOT))
+        search_dir_display = str(campaign_dir.relative_to(ROOT))
     except ValueError:
-        campaign_dir_display = str(campaign_dir)
+        search_dir_display = str(campaign_dir)
 
     print(
         json.dumps(
             {
-                "campaign_dir": campaign_dir_display,
+                "search_dir": search_dir_display,
                 "iteration": iteration,
                 "snapshot": current_snapshot,
                 "panel_score": panel_score,

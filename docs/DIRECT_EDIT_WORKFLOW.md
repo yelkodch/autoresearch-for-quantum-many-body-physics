@@ -3,10 +3,6 @@
 This workflow treats `train.py` as the single mutable artifact while keeping the
 physics and evaluation code fixed.
 
-It is the closest component in this repository to the original
-[`autoresearch`](https://github.com/karpathy/autoresearch) pattern that inspired
-the project, adapted here for a quantum many-body setting.
-
 ## Core Rule
 
 - `prepare.py` is fixed.
@@ -19,7 +15,7 @@ Edit `train.py`, then evaluate it:
 
 ```bash
 .venv/bin/python controller/run_direct_experiment.py \
-  --campaign-dir results/fixed_panel_search \
+  --campaign-dir results/recipe_search_example \
   --description "brief description of the change" \
   --max-steps 50
 ```
@@ -36,21 +32,24 @@ The repository also includes a conservative batch runner for small recipe sweeps
 
 ```bash
 .venv/bin/python controller/run_direct_batch.py \
-  --campaign-dir results/fixed_panel_search \
+  --campaign-dir results/recipe_search_example \
   --max-steps 50 \
   --time-limit-s 1800
 ```
 
 ## Files Written
 
-Each campaign directory contains:
+Each search directory contains:
 
 - `results.tsv`
 - `ledger.jsonl`
-- `campaign_history.md`
+- `search_history.md`
 - `best_train.py`
 - `initial_train.py`
 - `experiment_state.json`
+- `current_best_snapshot.txt`
+- `search_memory.md`
+- `search_memory.json`
 
 ## Fixed-Budget Rule
 
