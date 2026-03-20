@@ -1,0 +1,25 @@
+# Virtual environment
+.venv/
+__pycache__/
+*.pyc
+
+# Secrets
+.env
+
+# Temporary files
+_tmp_*
+*.log
+.pytest_cache/
+.ipynb_checkpoints/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+
+# Runtime artifacts
+results/
+logs/
