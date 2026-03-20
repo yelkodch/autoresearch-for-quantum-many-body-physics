@@ -38,6 +38,12 @@ This makes the repository useful for:
 - comparing short-budget search recipes against exact 4x4 references,
 - building a reproducible workflow before scaling beyond exact-diagonalization regimes.
 
+From a variational point of view, the project searches for better ways to
+represent and optimize a neural wavefunction while keeping the physical problem
+fixed. The ground-state energy is the main target, but it is interpreted
+together with local-energy variance, sector gaps, and simple order parameters so
+that the method is not judged by a single scalar alone.
+
 ## Current Scope
 
 - Model: spin-1/2 J1-J2 Heisenberg antiferromagnet on a periodic 4x4 square lattice

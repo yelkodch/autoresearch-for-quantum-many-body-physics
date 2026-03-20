@@ -38,6 +38,10 @@ Excluded from the audit scope for publication because they are not versioned:
    Checked for likely API keys and tokens, including Gemini, Groq, OpenAI,
    GitHub token formats, and generic secret markers.
 
+1b. Git-history secret scan
+   Checked every commit reachable from `main` for the same token patterns to
+   reduce the risk that a secret had been committed and later removed.
+
 2. Personal-data scanning
    Checked for personal names, email addresses, local filesystem paths, hostnames,
    and workstation-specific prompt fragments.
@@ -56,6 +60,9 @@ Excluded from the audit scope for publication because they are not versioned:
 
 No real secrets or personal machine paths were detected in tracked repository
 contents at the time of the audit.
+
+No matching secret patterns were detected in the reachable git history of the
+private repository either.
 
 ### Informational note I1
 
