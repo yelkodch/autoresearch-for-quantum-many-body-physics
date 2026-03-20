@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import os
 import json
+import os
 import tempfile
 from pathlib import Path
 
@@ -48,94 +48,100 @@ def make_recipe_search_summary() -> Path:
     plt.rcParams.update(
         {
             "font.size": 10,
-            "axes.titlesize": 16,
+            "axes.titlesize": 14,
             "axes.labelsize": 11,
-            "axes.edgecolor": "#cbd5e1",
-            "axes.linewidth": 1.0,
-            "xtick.color": "#334155",
-            "ytick.color": "#334155",
-            "text.color": "#0f172a",
-            "axes.labelcolor": "#0f172a",
+            "xtick.labelsize": 10,
+            "ytick.labelsize": 10,
             "font.family": "DejaVu Sans",
         }
     )
 
-    fig = plt.figure(figsize=(11.8, 4.9), dpi=200)
-    grid = fig.add_gridspec(1, 2, width_ratios=[4.2, 1.55])
-    ax = fig.add_subplot(grid[0, 0])
-    side = fig.add_subplot(grid[0, 1])
-    fig.subplots_adjust(left=0.07, right=0.985, bottom=0.14, top=0.87, wspace=0.02)
+    fig, ax = plt.subplots(figsize=(10.6, 5.15), dpi=200)
+    fig.subplots_adjust(left=0.10, right=0.97, bottom=0.16, top=0.79)
 
-    fig.suptitle("Fixed-Panel Recipe Search", x=0.065, y=0.985, ha="left", fontsize=17, fontweight="bold")
     fig.text(
-        0.065,
-        0.93,
-        f"{payload['system_label']}  •  {payload['benchmark_label']}  •  lower is better",
+        0.10,
+        0.95,
+        "Fixed-Panel Recipe Search",
         ha="left",
-        va="center",
-        fontsize=10.5,
-        color="#475569",
+        va="top",
+        fontsize=14,
+        fontweight="bold",
+        color="#111827",
+    )
+    fig.text(
+        0.10,
+        0.895,
+        f"{payload['system_label']}  •  {payload['benchmark_label']}",
+        ha="left",
+        va="top",
+        fontsize=10.2,
+        color="#4b5563",
     )
 
-    ax.plot(iterations, scores, color="#2563eb", linewidth=2.2, zorder=2)
-    ax.scatter(keep_x, keep_y, color="#16a34a", s=36, zorder=4)
-    ax.scatter(discard_x, discard_y, color="#ef4444", s=28, marker="x", linewidths=1.6, zorder=4)
-    ax.scatter([best_iteration], [best_score], color="#0f172a", s=68, zorder=5)
+    ax.set_facecolor("white")
+    fig.patch.set_facecolor("white")
 
-    ax.axhline(initial_score, color="#94a3b8", linestyle="--", linewidth=1.1, alpha=0.9)
-    ax.axhline(best_score, color="#0f172a", linestyle=":", linewidth=1.2, alpha=0.9)
+    ax.plot(iterations, scores, color="#374151", linewidth=2.0, zorder=2)
+    ax.scatter(keep_x, keep_y, s=34, color="#f59e0b", edgecolors="white", linewidths=0.6, zorder=4)
+    ax.scatter(discard_x, discard_y, s=28, color="#9ca3af", marker="x", linewidths=1.6, zorder=4)
+    ax.scatter([best_iteration], [best_score], s=64, color="#111827", zorder=5)
 
-    ax.set_xlabel("Iteration")
-    ax.set_ylabel("Panel score")
-    ax.set_xlim(min(iterations) - 0.3, max(iterations) + 0.6)
+    ax.axhline(initial_score, color="#cbd5e1", linestyle="--", linewidth=1.0, zorder=1)
+    ax.axhline(best_score, color="#f59e0b", linestyle=":", linewidth=1.2, zorder=1)
+
+    ax.annotate(
+        f"best  {fmt_score(best_score)}",
+        xy=(best_iteration, best_score),
+        xytext=(-8, -28),
+        textcoords="offset points",
+        ha="right",
+        va="top",
+        fontsize=9.2,
+        color="#111827",
+        bbox={"boxstyle": "round,pad=0.25", "facecolor": "white", "edgecolor": "#d1d5db"},
+    )
+
+    ax.set_xlabel("Iteration", color="#111827")
+    ax.set_ylabel("Panel score", color="#111827")
+    ax.set_xlim(min(iterations) - 0.3, max(iterations) + 0.4)
     pad = (max(scores) - min(scores)) * 0.08
     ax.set_ylim(min(scores) - pad, max(scores) + pad)
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
-    ax.grid(axis="y", color="#cbd5e1", linewidth=0.8, alpha=0.85)
-    ax.grid(axis="x", color="#e2e8f0", linewidth=0.5, alpha=0.55)
+    ax.grid(axis="y", color="#e5e7eb", linewidth=0.8)
+    ax.grid(axis="x", color="#f3f4f6", linewidth=0.6)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_color("#cbd5e1")
+    ax.spines["bottom"].set_color("#cbd5e1")
+    ax.tick_params(colors="#374151")
 
-    side.axis("off")
-    side.set_xlim(0, 1)
-    side.set_ylim(0, 1)
-    side.text(0.0, 0.95, "Curated snapshot", fontsize=12.5, fontweight="bold", va="top")
-    side.scatter([0.02], [0.84], s=34, color="#16a34a", transform=side.transAxes)
-    side.text(0.10, 0.84, "accepted", fontsize=10.2, va="center", transform=side.transAxes)
-    side.scatter([0.02], [0.78], s=34, color="#ef4444", marker="x", linewidths=1.5, transform=side.transAxes)
-    side.text(0.10, 0.78, "rejected", fontsize=10.2, va="center", transform=side.transAxes)
-    side.scatter([0.02], [0.72], s=42, color="#0f172a", transform=side.transAxes)
-    side.text(0.10, 0.72, "best", fontsize=10.2, va="center", transform=side.transAxes)
-    side.text(
-        0.0,
-        0.64,
-        "\n".join(
-            [
-                f"Iterations      {len(rows)}",
-                f"Accepted        {sum(1 for status in statuses if status == 'keep')}",
-                f"Rejected        {sum(1 for status in statuses if status == 'discard')}",
-                "",
-                f"Initial score   {fmt_score(initial_score)}",
-                f"Best score      {fmt_score(best_score)}",
-                f"Improvement     {fmt_score(improvement)}",
-                f"Best iteration  {best_iteration}",
-            ]
-        ),
-        family="DejaVu Sans Mono",
-        fontsize=10.2,
-        va="top",
-        color="#1e293b",
-        bbox={"boxstyle": "round,pad=0.55", "facecolor": "#f8fafc", "edgecolor": "#cbd5e1"},
-        linespacing=1.45,
+    stats_text = "\n".join(
+        [
+            f"iterations   {len(rows)}",
+            f"accepted     {sum(1 for status in statuses if status == 'keep')}",
+            f"rejected     {sum(1 for status in statuses if status == 'discard')}",
+            "",
+            f"initial      {fmt_score(initial_score)}",
+            f"best         {fmt_score(best_score)}",
+            f"improvement  {fmt_score(improvement)}",
+            f"best iter    {best_iteration}",
+            "",
+            "orange  accepted",
+            "gray x  rejected",
+        ]
     )
-    side.text(
-        0.0,
-        0.18,
-        "The search improves a stable short-budget benchmark while keeping the physical setup fixed.",
-        fontsize=9.5,
-        color="#475569",
+    ax.text(
+        0.975,
+        0.94,
+        stats_text,
+        transform=ax.transAxes,
+        ha="right",
         va="top",
-        wrap=True,
+        family="DejaVu Sans Mono",
+        fontsize=9.1,
+        color="#1f2937",
+        bbox={"boxstyle": "round,pad=0.38", "facecolor": "#f9fafb", "edgecolor": "#d1d5db"},
     )
 
     FIGURES_DIR.mkdir(parents=True, exist_ok=True)
@@ -145,5 +151,4 @@ def make_recipe_search_summary() -> Path:
 
 
 if __name__ == "__main__":
-    path = make_recipe_search_summary()
-    print(path)
+    print(make_recipe_search_summary())
