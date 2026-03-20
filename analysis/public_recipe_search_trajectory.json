@@ -1,0 +1,28 @@
+{
+  "system_label": "J1-J2 Heisenberg 2D",
+  "benchmark_label": "Fixed 50-step panel, seed 10000",
+  "iterations": [
+    {"iteration": 1, "panel_score": -0.3884307662645976, "status": "keep"},
+    {"iteration": 2, "panel_score": -0.3891223073005676, "status": "keep"},
+    {"iteration": 3, "panel_score": -0.3867997427781423, "status": "discard"},
+    {"iteration": 4, "panel_score": -0.3813883423805237, "status": "discard"},
+    {"iteration": 5, "panel_score": -0.3813883423805237, "status": "discard"},
+    {"iteration": 6, "panel_score": -0.3692302405834198, "status": "discard"},
+    {"iteration": 7, "panel_score": -0.38431996504465743, "status": "discard"},
+    {"iteration": 8, "panel_score": -0.38989503184954327, "status": "keep"},
+    {"iteration": 9, "panel_score": -0.3908506115277608, "status": "keep"},
+    {"iteration": 10, "panel_score": -0.3908506115277608, "status": "discard"},
+    {"iteration": 11, "panel_score": -0.39085118373235067, "status": "keep"},
+    {"iteration": 12, "panel_score": -0.3908332149187724, "status": "discard"},
+    {"iteration": 13, "panel_score": -0.39167124629020694, "status": "keep"},
+    {"iteration": 14, "panel_score": -0.39434350132942203, "status": "keep"},
+    {"iteration": 15, "panel_score": -0.3852287828922272, "status": "discard"},
+    {"iteration": 16, "panel_score": -0.3852287908395131, "status": "discard"},
+    {"iteration": 17, "panel_score": -0.39434353311856585, "status": "keep"},
+    {"iteration": 18, "panel_score": -0.38522877693176266, "status": "discard"},
+    {"iteration": 19, "panel_score": -0.38789828022321066, "status": "discard"},
+    {"iteration": 20, "panel_score": -0.3894625584284464, "status": "discard"},
+    {"iteration": 21, "panel_score": -0.3943569540977478, "status": "keep"},
+    {"iteration": 22, "panel_score": -0.3943569540977478, "status": "discard"}
+  ]
+}

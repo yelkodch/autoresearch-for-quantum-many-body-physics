@@ -142,7 +142,9 @@ In short:
   promising as an optimization recipe, but not yet clearly better as a final
   trained model across all anchor points.
 
-![Recipe-search summary](docs/figures/recipe_search_summary.png)
+<p align="center">
+  <img src="docs/figures/recipe_search_summary.png" alt="Recipe-search summary" width="980">
+</p>
 
 That distinction is important: the repository already demonstrates useful
 automated search behavior, but the current best short-budget recipe should still
